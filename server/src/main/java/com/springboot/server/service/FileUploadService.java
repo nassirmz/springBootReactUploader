@@ -9,9 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileUploadService {
@@ -31,6 +33,20 @@ public class FileUploadService {
 
     public String storeFile(MultipartFile file) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        return fileName;
+        try {
+            if (file.isEmpty()) {
+                throw new FileUploadException("Empty file");
+            }
+            if (fileName.contains("..")) {
+                throw new FileUploadException("Invalid file path");
+            }
+            LOGGER.info("Correct file path, begin file upload");
+            Files.copy(file.getInputStream(), this.fileDirectory.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+
+            return fileName;
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new FileUploadException("Failed to upload file " + fileName, e);
+        }
     }
 }
