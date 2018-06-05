@@ -1,6 +1,7 @@
 package com.springboot.server.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -8,6 +9,7 @@ import javax.persistence.Table;
 @Table(name="files")
 public class FileUploadMetaData {
     @Id
+    @GeneratedValue
     private int Id;
 
     private String name;
@@ -16,7 +18,12 @@ public class FileUploadMetaData {
 
     private String createdAt;
 
-    private String owner;
+
+    public FileUploadMetaData(String name, String size, String createdAt) {
+        this.name = name;
+        this.size = size;
+        this.createdAt = createdAt;
+    }
 
     public String getName() {
         return name;
@@ -40,13 +47,5 @@ public class FileUploadMetaData {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
     }
 }
