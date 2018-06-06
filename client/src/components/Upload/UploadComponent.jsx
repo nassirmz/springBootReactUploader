@@ -4,42 +4,27 @@ import { Form, FormGroup, Button, Modal } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
 
 import FieldInput from './FieldInput';
+import ErrorDisplay from "../Message/ErrorDisplay";
 
 const propTypes = {
     handleSubmit: PropTypes.func.isRequired,
-};
-
-const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
-
-const FileInput = ({
-                       input: { value: omitValue, onChange, onBlur, ...inputProps },
-                       meta: omitMeta,
-                       ...props
-                   }) => {
-    return (
-        <input
-            onChange={adaptFileEventToValue(onChange)}
-            onBlur={adaptFileEventToValue(onBlur)}
-            type="file"
-            {...props.input}
-            {...props}
-        />
-    );
+    errorMessage: PropTypes.string
 };
 
 let UploadComponent = (props) => {
-    const { handleSubmit } = props;
+    const { handleSubmit, errorMessage } = props;
 
     return (
 
         <Form onSubmit={handleSubmit}>
             <Modal.Body>
                 <FormGroup>
-                    <Field name="attachment" component={FileInput} type="file" />
+                    <Field name="attachment" component={FieldInput} type="file" />
                 </FormGroup>
             </Modal.Body>
             <Modal.Footer>
                 <FormGroup>
+                    <ErrorDisplay errorMessage={errorMessage}/>
                     <Button type="submit">
                         UPLOAD
                     </Button>

@@ -1,3 +1,4 @@
 export const UPLOAD_SUCCESS = 'UPLOAD_SUCCESS';
+export const RESET_UPLOAD_DATA= 'RESET_UPLOAD_DATA';
 export const SET_ERROR = 'SET_ERROR';
 export const RESET_ERROR = 'RESET_ERROR';

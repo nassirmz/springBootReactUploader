@@ -1,22 +1,26 @@
 import axios from 'axios';
 
-import { UPLOAD_SUCCESS, SET_ERROR, RESET_ERROR } from '../constants/ActionTypes';
+import { UPLOAD_SUCCESS, RESET_UPLOAD_DATA, SET_ERROR, RESET_ERROR } from '../constants/ActionTypes';
 
 export function authSuccess(data) {
     return {
         type: UPLOAD_SUCCESS,
         name: data.name,
-        size: data.size
+    };
+}
+
+export function resetUploadData() {
+    return {
+        type: RESET_UPLOAD_DATA
     };
 }
 
 export function startUpload(uploadValue) {
-    console.log('startUpload Value', uploadValue);
     return (dispatch) => {
-        console.log('uploadValue inside dispatch', uploadValue);
         const headers = { headers: { 'Content-Type': 'multipart/form-data' } };
         axios.post('http://localhost:8080/files', uploadValue, headers)
             .then((resp) => {
+                console.log(resp, resp.data, 'success response');
                 dispatch(authSuccess(resp.data));
                 dispatch({ type: RESET_ERROR });
             })

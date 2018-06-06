@@ -1,14 +1,19 @@
 import React from 'react';
 
-const handleChange = (handler) => ({target: {files}}) =>
-    handler(files.length ? {file: files[0], name: files[0].name} : {});
+const adaptFileEventToValue = delegate => e => delegate(e.target.files[0]);
 
 export default ({
-                    input: {onChange, onBlur, value: omitValue, ...inputProps},
-                    meta: omitMeta,
-                    ...props
-                }) => (
-    <input type="file"
-           onChange={handleChange(onChange)} onBlur={handleChange(onBlur)}
-           {...inputProps} {...props} />
-);
+                       input: { value: omitValue, onChange, onBlur, ...inputProps },
+                       meta: omitMeta,
+                       ...props
+                   }) => {
+    return (
+        <input
+            onChange={adaptFileEventToValue(onChange)}
+            onBlur={adaptFileEventToValue(onBlur)}
+            type="file"
+            {...props.input}
+            {...props}
+        />
+    );
+};

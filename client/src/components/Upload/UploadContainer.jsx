@@ -21,8 +21,7 @@ class UploadContainer extends Component {
     }
 
     handleSubmit = (data) => {
-        console.log(data, 'handleSubmit data');
-        let formData = new FormData()
+            let formData = new FormData()
         formData.append('file', data.attachment);
         this.props.dispatch(startUpload(formData));
     }

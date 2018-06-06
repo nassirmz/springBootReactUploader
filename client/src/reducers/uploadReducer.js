@@ -1,8 +1,7 @@
-import { UPLOAD_SUCCESS  } from '../constants/ActionTypes';
+import { UPLOAD_SUCCESS, RESET_UPLOAD_DATA  } from '../constants/ActionTypes';
 
 const uploadState = {
     name: '',
-    size: '',
 };
 
 export default function uploadReducer(state = uploadState, action) {
@@ -10,7 +9,10 @@ export default function uploadReducer(state = uploadState, action) {
         case UPLOAD_SUCCESS:
             return {
                 name: action.name,
-                size: action.size
+            };
+        case RESET_UPLOAD_DATA:
+            return {
+                name: '',
             };
         default:
             return state;
