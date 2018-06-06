@@ -20,7 +20,6 @@ export function startUpload(uploadValue) {
         const headers = { headers: { 'Content-Type': 'multipart/form-data' } };
         axios.post('http://localhost:8080/files', uploadValue, headers)
             .then((resp) => {
-                console.log(resp, resp.data, 'success response');
                 dispatch(authSuccess(resp.data));
                 dispatch({ type: RESET_ERROR });
             })
