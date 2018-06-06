@@ -6,6 +6,7 @@ import com.springboot.server.service.FileUploadService;
 import com.springboot.server.transformer.FileUploadTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,9 @@ public class FileUploadController {
     }
 
     @PostMapping("/files")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity uploadFile(@RequestParam("file") MultipartFile file) {
+        System.out.println("file upload starts");
         FileUploadMetaData fileUploadMetaData = fileUploadService.storeFile(file);
         FileUploadMetaDataDTO fileUploadMetaDataDTO = fileUploadTransformer.transformEntitty(fileUploadMetaData);
         return ResponseEntity.ok(fileUploadMetaDataDTO);
